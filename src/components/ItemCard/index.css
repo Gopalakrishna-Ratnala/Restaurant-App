@@ -1,0 +1,65 @@
+.item-card-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    list-style-type: none;   
+    width: 328px;
+}
+.menu-item-img{
+    width: 160px;
+    height: 100px;
+    top: 248px;
+    left: 165px;
+    gap: 0px;
+    border-radius: 8px;
+    opacity: 0px;
+}
+.item-name{
+    font-family: DM Sans;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.20000000298023224px;
+    text-align: left;
+    color: #334155;
+    margin: 5px;
+   
+}
+.item-type{
+    font-family: DM Sans;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    color: #64748B;   
+    margin: 5px;
+}
+.rating{
+    font-family: DM Sans;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18.23px;
+    text-align: left;
+    color: #1E293B;
+    
+}
+.review{
+    font-family: DM Sans;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15.62px;
+    text-align: left;
+    color: #64748B;
+}
+.menu-item-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+.rating-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}

@@ -1,0 +1,139 @@
+.login-container{
+    padding: 0px 0px 0px 165px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: #FFFFFF;
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
+}
+.login-form-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 705px;
+    height: 1024px;
+    background: #FFFFFF;
+}   
+
+.logo-img-container{
+    width: 705px;
+    height: 1024px;
+    background: #C4C4C4;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.login-form{
+    width: 456px;
+    height: 523px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background: #FEFEFF;
+    padding: 50px;
+    top: 250px;
+}
+
+.input-field-container{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 360px;
+    height: 64px;   
+}
+.login-button{
+    width: 328px;
+    height: 24px;
+    top: 8px;
+    left: 16px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: DM Sans;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    color: #FFFFFF;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+label{
+    margin-bottom: 5px;
+    width: 66px;
+    height: 16px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: DM Sans;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    color: #475569;
+
+}
+input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+
+    width: 360px;
+    height: 40px;
+    top: 24px;
+    gap: 0px;
+    border-radius: 2px;
+    opacity: 0px;
+    background: #E2E8F0;
+
+}
+
+.login-heading{
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #000000;
+}
+
+.frame-img{
+    width: 53px;
+    height: 43px;
+    top: 298px;
+    left: 366px;
+    padding: 2px 0px 0px 0px;
+    gap: 0px;
+    opacity: 0px;
+}
+.login-heading{
+    width: 172px;
+height: 32px;
+top: 341px;
+left: 307px;
+gap: 0px;
+opacity: 0px;
+font-family: DM Sans;
+font-size: 24px;
+font-style: italic;
+font-weight: 700;
+line-height: 32px;
+text-align: center;
+color: #F7931E;
+
+}
+.login-button-container{
+width: 360px;
+height: 40px;
+border-radius: 8px;
+opacity: 0px;
+background: #F7931E;
+}
