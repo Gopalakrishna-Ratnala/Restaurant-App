@@ -1,0 +1,129 @@
+.selected-card-item-container {
+  width: 1440px;
+  height: 344px;
+  gap: 0px;
+  opacity: 0px;
+  background: #333333;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  margin: auto;
+}
+.selected-item-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 795px;
+  height: 280px;
+  top: 176px;
+  left: 165px;
+  gap: 0px;
+  border-radius: 8px;
+  opacity: 0px;
+
+  color: #e2e8f0;
+}
+
+.selected-item-img {
+  width: 445px;
+  height: 280px;
+  top: 176px;
+  left: 165px;
+  gap: 0px;
+  border-radius: 8px;
+  opacity: 0px;
+  margin-right: 30px;
+}
+
+.selected-item-content {
+  height: 280px;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.selected-item-name {
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  text-align: left;
+  color: #ffffff;
+  margin: 0px;
+}
+.selected-item-cuisine {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+
+  color: #ffffff;
+}
+.selected-item-location {
+  font-family: sans-serif;
+
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+
+  color: #ffffff;
+}
+
+.selected-item-rating-cost-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 200px;
+}
+
+/* .selected-rating-container {
+}
+
+.selected-rating-star-container {
+} */
+
+.selected-rating {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.selected-review {
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* .selected-item-cost-container {
+} */
+
+.selected-item-cost {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
+  display: block;
+}
+
+.selected-item-cost-text {
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 400;
+}
+.food-items-list-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 1440px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: sans-serif;
+  flex-wrap: wrap;
+  margin: 0px;
+}

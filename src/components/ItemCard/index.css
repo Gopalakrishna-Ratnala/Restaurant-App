@@ -1,65 +1,80 @@
-.item-card-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    list-style-type: none;   
-    width: 328px;
+.item-card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  list-style-type: none;
+  width: 328px;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+  border-radius: 8px;
+  font-family: sans-serif;
 }
-.menu-item-img{
-    width: 160px;
-    height: 100px;
-    top: 248px;
-    left: 165px;
-    gap: 0px;
-    border-radius: 8px;
-    opacity: 0px;
+
+.item-card-container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow to make it pop */
+  transform: translateY(-5px); /* Slightly raises the card */
 }
-.item-name{
-    font-family: DM Sans;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.20000000298023224px;
-    text-align: left;
-    color: #334155;
-    margin: 5px;
-   
+
+.menu-item-img {
+  width: 160px;
+  height: 100px;
+  top: 248px;
+  left: 165px;
+  gap: 0px;
+  border-radius: 8px;
+  opacity: 0px; /* Note: You might want to change this opacity to make the image visible */
 }
-.item-type{
-    font-family: DM Sans;
-    font-size: 14px;
-    font-weight: 400;
-    text-align: left;
-    color: #64748B;   
-    margin: 5px;
+
+.item-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.20000000298023224px;
+  margin: 5px;
+  text-align: left;
+  color: #334155;
 }
-.rating{
-    font-family: DM Sans;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 18.23px;
-    text-align: left;
-    color: #1E293B;
-    
+.item-type {
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+  color: #64748b;
+  margin: 5px;
 }
-.review{
-    font-family: DM Sans;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 15.62px;
-    text-align: left;
-    color: #64748B;
+.rating {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18.23px;
+  text-align: left;
+  color: #1e293b;
 }
-.menu-item-content{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-left: 10px;
+.review {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15.62px;
+  text-align: left;
+  color: #64748b;
 }
-.rating-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+.menu-item-content {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: center;
+  margin-left: 10px;
+}
+.rating-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  width: 105px;
+}
+.rating-star-container {
+  display: flex;
+}
+.link-item {
+  text-decoration: none;
 }
