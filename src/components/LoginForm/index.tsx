@@ -1,111 +1,92 @@
+// src/components/LoginForm/index.tsx
 import React, { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { useDispatch, useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
+import { AppDispatch, RootState } from '../../redux/store'
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from '../../redux/reducers/authReducer'
+import { loginUser } from '../../api/authApi'
 import './index.css'
 import Frame from '../../assets/Frame.jpg'
-import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
-interface UserDetails {
+interface LoginCredentials {
   username: string
   password: string
 }
 
 const LoginForm: React.FC = props => {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [errorMsg, setErrorMsg] = useState<string>('')
-  const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false)
-  console.log(props)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch<AppDispatch>()
+  const { loading, error } = useSelector((state: RootState) => state.auth)
 
-  const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setUsername(e.target.value)
-  }
+  const navigate = useNavigate()
 
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.target.value)
-  }
+  const mutation = useMutation<
+    { jwt_token: string }, // Response type
+    Error, // Error type
+    LoginCredentials // Variables type
+  >({
+    mutationFn: loginUser, // Include mutationFn in the options object
+    onMutate: () => {
+      dispatch(loginStart())
+    },
+    onSuccess: data => {
+      dispatch(loginSuccess(data.jwt_token))
+      Cookies.set('jwtToken', data.jwt_token, { expires: 7 })
+      navigate('/')
+    },
+    onError: (error: Error) => {
+      dispatch(loginFailure(error.message))
+    },
+  })
 
-  const onSubmitSucess = (jwtToken: string) => {
-    const { history }: any = props
-    console.log(jwtToken)
-    Cookies.set('jwtToken', jwtToken, { expires: 7 })
-    history.replace('/')
-  }
-
-  const onSubmitFailure = (errorMsg: string) => {
-    console.log(errorMsg)
-    setErrorMsg(errorMsg)
-    setShowErrorMsg(true)
-  }
-
-  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const userDetails: UserDetails = {
-      username,
-      password,
-    }
-
-    const url = 'https://apis.ccbp.in/login'
-    const options = {
-      method: 'POST',
-
-      body: JSON.stringify(userDetails),
-    }
-
-    const response = await fetch(url, options)
-    const data = await response.json()
-    if (response.ok) {
-      onSubmitSucess(data.jwt_token)
-    } else {
-      onSubmitFailure(data.error_msg)
-    }
-
-    setUsername('')
-    setPassword('')
-  }
-
-  const renderUserNameField = () => {
-    return (
-      <>
-        <label htmlFor='username'>Username</label>
-        <input
-          type='text'
-          placeholder='Username'
-          onChange={onChangeUsername}
-          value={username}
-          id='username'
-        />
-      </>
-    )
-  }
-
-  const renderPasswordField = () => {
-    return (
-      <>
-        <label htmlFor='password'>Password</label>
-        <input
-          type='password'
-          placeholder='Password'
-          onChange={onChangePassword}
-          value={password}
-          id='password'
-        />
-      </>
-    )
+    mutation.mutate({ username, password })
   }
 
   return (
     <div className='login-container'>
       <div className='login-form-container'>
-        <form onSubmit={onSubmitForm} className='login-form'>
+        <form onSubmit={handleSubmit} className='login-form'>
           <img src={Frame} alt='Frame' className='frame-img' />
           <h1 className='login-heading'>Tasty Kitchens</h1>
-          <div className='input-field-container'>{renderUserNameField()}</div>
-          <div className='input-field-container'>{renderPasswordField()}</div>
+
+          <div className='input-field-container'>
+            <label htmlFor='username'>Username</label>
+            <input
+              type='text'
+              id='username'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              placeholder='Username'
+            />
+          </div>
+
+          <div className='input-field-container'>
+            <label htmlFor='password'>Password</label>
+            <input
+              type='password'
+              id='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder='Password'
+            />
+          </div>
+
           <div className='login-button-container'>
-            <button type='submit' className='login-button'>
-              Login
+            <button type='submit' className='login-button' disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </div>
-          {showErrorMsg && <p>{errorMsg}</p>}
+
+          {error && <p className='error-message'>{error}</p>}
         </form>
       </div>
     </div>

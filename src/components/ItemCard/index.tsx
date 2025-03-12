@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { BsStarFill } from 'react-icons/bs'
-
+import StarIcon from '@mui/icons-material/Star'
 import './index.css'
 import { Link } from 'react-router-dom'
 
@@ -31,7 +30,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ eachItem }) => {
           </p>
           <div className='rating-container'>
             <div className='rating-star-container'>
-              <BsStarFill style={{ color: '#FFCC00' }} />
+              <StarIcon sx={{ color: '#FFCC00', fontSize: 12 }} />{' '}
               <span className='rating'>{eachItem.userRating.rating}</span>
             </div>
 

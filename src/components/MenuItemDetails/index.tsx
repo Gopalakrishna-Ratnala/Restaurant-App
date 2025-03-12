@@ -1,162 +1,156 @@
-import React, { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Rating,
+  Divider,
+  Chip,
+  Avatar,
+  useTheme,
+  useMediaQuery,
+  Stack,
+} from '@mui/material'
 import Header from '../Header'
-import { BsStarFill } from 'react-icons/bs'
-import './index.css'
 import FoodItemCard from '../FoodItemCard'
-import { apiStatusConstants } from '../types'
+import Footer from '../Footer'
+import { fetchMenuItemDetails } from '../../api/menuItemApi'
 import LoadingView from '../LoadingView'
 import FailureView from '../FailureView'
 
-import {
-  MenuItemDetailsData,
-  UpdatedFoodItemsObjectTypes,
-  MenuItemDetailsProps,
-} from '../types'
-import Footer from '../Footer'
+const MenuItemDetails = () => {
+  const { id } = useParams()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-// Assuming you're using React Router, define the expected props structure
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['menuItem', id],
+    queryFn: () => fetchMenuItemDetails(id!),
+  })
 
-const MenuItemDetails: React.FC<MenuItemDetailsProps> = ({ match }) => {
-  const { id } = match.params
-  console.log(id)
+  if (isLoading) return <LoadingView />
+  if (isError) return <FailureView hasButton={true} />
 
-  const [menuItemDetails, setMenuItemDetails] = useState<MenuItemDetailsData>(
-    {} as MenuItemDetailsData
-  )
-  const [foodItemsList, setFoodItemsList] = useState<
-    UpdatedFoodItemsObjectTypes[]
-  >([])
-
-  const [apiStatus, setApiStatus] = useState<string>(apiStatusConstants.initial)
-
-  useEffect(() => {
-    setApiStatus(apiStatusConstants.inProgress)
-    const getMenuItems = async () => {
-      const URL = `${process.env.REACT_APP_API_URL}restaurants-list/${id}`
-      const options = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${Cookies.get('jwtToken')}`,
-        },
-      }
-      const response = await fetch(URL, options)
-      if (response.ok) {
-        const data = await response.json()
-        const updatedData: MenuItemDetailsData = {
-          costForTwo: data.cost_for_two,
-          cuisine: data.cuisine,
-          foodItems: data.food_items,
-          id: data.id,
-          imageUrl: data.image_url,
-          itemsCount: data.items_count,
-          location: data.location,
-          name: data.name,
-          opensAt: data.opens_at,
-          rating: data.rating,
-          reviewsCount: data.reviews_count,
-        }
-        const foodItems = updatedData.foodItems.map(eachItem => ({
-          cost: eachItem.cost,
-          foodType: eachItem.food_type,
-          id: eachItem.id,
-          imageUrl: eachItem.image_url,
-          name: eachItem.name,
-          rating: eachItem.rating,
-        }))
-        setApiStatus(apiStatusConstants.success)
-        setMenuItemDetails(updatedData)
-        setFoodItemsList(foodItems)
-      }
-      if (response.status === 401) {
-        setApiStatus(apiStatusConstants.failure)
-      }
-    }
-
-    getMenuItems()
-  }, [id]) // Depend on `id` to refetch when it changes
-
-  const renderSuccessView = () => {
-    return (
-      <div>
-        <div className='selected-card-item-container'>
-          <div className='selected-item-container'>
-            <img
-              src={menuItemDetails.imageUrl}
-              alt=''
-              className='selected-item-img'
-            />
-            <div className='selected-item-content'>
-              <p className='selected-item-name'>{menuItemDetails.name}</p>
-              <p className='selected-item-cuisine'>{menuItemDetails.cuisine}</p>
-              <p className='selected-item-location'>
-                {menuItemDetails.location}
-              </p>
-              <div className='selected-item-rating-cost-container'>
-                <div className='selected-rating-container'>
-                  <div className='selected-rating-star-container'>
-                    <BsStarFill
-                      style={{ color: '#FFFFFF', fontSize: '12px' }}
-                    />
-                    <span className='selected-rating'>
-                      {menuItemDetails.rating}
-                    </span>
-                  </div>
-                  <span className='selected-review'>
-                    {menuItemDetails.reviewsCount}+ rating
-                  </span>
-                </div>
-                <hr
-                  style={{
-                    width: '1px',
-                    height: '50px',
-                    backgroundColor: '#E2E8F0',
-                    margin: 'auto',
-                    border: 'none',
-                  }}
-                />
-                <div className='selected-item-cost-container'>
-                  <span className='selected-item-cost'>
-                    $ {menuItemDetails.costForTwo}
-                  </span>
-                  <span className='selected-item-cost-text'>cost for two</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <ul className='food-items-list-container'>
-          {foodItemsList.map(eachItem => (
-            <FoodItemCard foodItem={eachItem} key={eachItem.id} />
-          ))}
-        </ul>
-        <Footer />
-      </div>
-    )
-  }
-
-  const renderLoadingView = () => <LoadingView />
-
-  const renderFailureView = () => <FailureView hasButton={true} />
-
-  const renderItemDetailsView = () => {
-    switch (apiStatus) {
-      case apiStatusConstants.success:
-        return renderSuccessView()
-      case apiStatusConstants.inProgress:
-        return renderLoadingView()
-      case apiStatusConstants.failure:
-        return renderFailureView()
-      default:
-        return null
-    }
-  }
+  const restaurantDetails = data?.restaurantDetails
+  const foodItems = data?.foodItems
 
   return (
-    <div>
+    <Box
+      sx={{
+        bgcolor: 'background.default',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Header />
-      {renderItemDetailsView()}
-    </div>
+      <Container maxWidth='lg' sx={{ py: 4 }}>
+        <Box
+          sx={{
+            bgcolor: 'grey.900',
+            borderRadius: 4,
+            p: 4,
+            mb: 4,
+            color: 'common.white',
+          }}
+        >
+          <Grid container spacing={4} alignItems='center'>
+            <Grid item xs={12} md={6}>
+              <Avatar
+                src={restaurantDetails?.imageUrl}
+                variant='rounded'
+                sx={{
+                  width: '100%',
+                  height: { xs: 200, md: 280 },
+                  borderRadius: 2,
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Typography
+                variant='h3'
+                gutterBottom
+                sx={{ fontWeight: 600, textAlign: 'start' }}
+              >
+                {restaurantDetails?.name}
+              </Typography>
+
+              <Typography
+                variant='body1'
+                gutterBottom
+                sx={{ textAlign: 'start' }}
+              >
+                {restaurantDetails?.cuisine}
+              </Typography>
+
+              <Typography
+                variant='body1'
+                gutterBottom
+                sx={{ textAlign: 'start' }}
+              >
+                {restaurantDetails?.location}
+              </Typography>
+
+              <Stack
+                direction='row'
+                spacing={4}
+                divider={
+                  <Divider
+                    orientation='vertical'
+                    flexItem
+                    sx={{ backgroundColor: '#ffffff' }}
+                  />
+                }
+                sx={{ mt: 3 }}
+              >
+                <Box>
+                  <Stack direction='column' alignItems='center' spacing={1}>
+                    <Rating
+                      value={restaurantDetails?.rating}
+                      precision={0.1}
+                      readOnly
+                      size={isMobile ? 'small' : 'medium'}
+                    />
+                    <Typography variant='body2'>
+                      ({restaurantDetails?.reviewsCount}+ Ratings)
+                    </Typography>
+                  </Stack>
+                </Box>
+
+                <Box>
+                  <Typography variant='h6' sx={{ fontWeight: 600 }}>
+                    ₹{restaurantDetails?.costForTwo?.toLocaleString()}
+                  </Typography>
+                  <Typography variant='caption'>Cost for two</Typography>
+                </Box>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Grid container spacing={3}>
+          {foodItems?.map((item: any) => (
+            <Grid item xs={12} sm={6} md={4} key={item.id}>
+              <Box
+                sx={{
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    transition: 'transform 0.3s ease',
+                  },
+                }}
+              >
+                <FoodItemCard foodItem={item} />
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+      <Footer />
+    </Box>
   )
 }
 

@@ -67,9 +67,9 @@ export interface Match {
   params: RouteParams
 }
 
-export interface MenuItemDetailsProps {
-  match: Match
-}
+// export interface MenuItemDetailsProps {
+//   match: Match
+// }
 
 export interface FoodItemsObject {
   cost: number
